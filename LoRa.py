@@ -24,7 +24,7 @@ for param in model.parameters():
   if param.ndim == 1:
     # cast the small parameters (e.g. layernorm) to fp32 for stability
     param.data = param.data.to(torch.float32)
-model = exllama_set_max_input_length(model, max_input_length=4340)
+model = exllama_set_max_input_length(model, max_input_length=10000)
 #model.gradient_checkpointing_enable()  # reduce number of stored activations
 model.enable_input_require_grads()
 
@@ -88,8 +88,8 @@ trainer = transformers.Trainer(
     model=model, 
     train_dataset=data['train'],
     args=transformers.TrainingArguments(
-        per_device_train_batch_size=4, 
-        gradient_accumulation_steps=4,
+        per_device_train_batch_size=2, 
+        gradient_accumulation_steps=8,
         warmup_steps=100, 
         max_steps=200, 
         learning_rate=2e-4, 
