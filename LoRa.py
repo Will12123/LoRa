@@ -29,7 +29,7 @@ for param in model.parameters():
     # cast the small parameters (e.g. layernorm) to fp32 for stability
     param.data = param.data.to(torch.float16)
 
-model = exllama_set_max_input_length(model, max_input_length=4340)
+model = exllama_set_max_input_length(model, max_input_length=10000)
 
 #model.gradient_checkpointing_enable()  # reduce number of stored activations
 model.enable_input_require_grads()
