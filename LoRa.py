@@ -14,13 +14,13 @@ from auto_gptq import exllama_set_max_input_length
 notebook_login()
 
 model = AutoModelForCausalLM.from_pretrained(
-    "TheBloke/phi-2.Q5_K_M.gguf", 
+    "microsoft/phi-2", 
     device_map='auto',
     trust_remote_code=True,
 )
 
 
-tokenizer = AutoTokenizer.from_pretrained("TheBloke/phi-2.Q5_K_M.gguf", trust_remote_code=True)
+tokenizer = AutoTokenizer.from_pretrained("microsoft/phi-2", trust_remote_code=True)
 tokenizer.pad_token = tokenizer.eos_token
 
 for param in model.parameters():
