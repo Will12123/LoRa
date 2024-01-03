@@ -5,7 +5,7 @@ import json
 from huggingface_hub import notebook_login
 import torch
 import torch.nn as nn
-from auto_gptq import exllama_set_max_input_length
+#from auto_gptq import exllama_set_max_input_length
 
 # Increase the buffer size for a sequence length >= 4340
 
@@ -29,7 +29,7 @@ for param in model.parameters():
     # cast the small parameters (e.g. layernorm) to fp32 for stability
     param.data = param.data.to(torch.float16)
 
-model = exllama_set_max_input_length(model, max_input_length=10000)
+#model = exllama_set_max_input_length(model, max_input_length=10000)
 
 #model.gradient_checkpointing_enable()  # reduce number of stored activations
 model.enable_input_require_grads()
