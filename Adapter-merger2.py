@@ -7,7 +7,7 @@ peft_model_id = "WillRanger/Phi2-lora-Adapters2"
 model = AutoModelForCausalLM.from_pretrained(model_id)
 model.load_adapter(peft_model_id)
 
-lora_config = LoraConfig(r=32, alpha=64, target_modules=['Wqkv','fc1', 'fc2'])
+lora_config = LoraConfig(target_modules=['Wqkv','fc1', 'fc2'])
 
 model.add_adapter(lora_config, adapter_name="lora")
 model.enable_adapters()
