@@ -17,9 +17,19 @@ def load_model_and_tokenizer():
 
     return model, tokenizer
 
-input_ids = tokenizer(prompt_template, return_tensors='pt').input_ids.cuda()
-output = model.generate(inputs=input_ids, temperature=0.7, do_sample=True, top_p=0.95, top_k=40, max_new_tokens=512)
-return tokenizer.decode(output[0])
+def generate(instruction, model, tokenizer):                              
+    #input_ids = tokenizer.encode(instruction, return_tensors="pt")
+
+
+    #input_ids = input_ids.to('cuda')
+
+    #attention_mask = torch.ones_like(input_ids)
+
+    inputs = tokenizer(instruction, return_tensors="pt", return_attention_mask=False)
+    outputs = model.generate(**inputs, max_length=512)
+    text = tokenizer.batch_decode(outputs)[0]
+    
+    return text
 
 if __name__ == '__main__':
     model, tokenizer = load_model_and_tokenizer()
