@@ -15,7 +15,7 @@ model = PeftModel.from_pretrained(model, "WillRanger/Phi2-lora-Adapters2", trust
 
 merged_model = model.merge_and_unload()
 
-model.push_to_hub("WillRanger/Phi2-lora",
+merged_model.push_to_hub("WillRanger/Phi2-lora",
                   use_auth_token=True,
                   commit_message="basic training",
                   private=False)
