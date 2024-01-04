@@ -12,12 +12,12 @@ model2 = PeftModel.from_pretrained(model, "WillRanger/Phi2-lora-Adapters2", trus
 
 
 #merge_adapter(peft_model, adapter_path="WillRanger/Phi2-lora-Adapters2")
+merged_model = model2.merge_and_unload()
+merged_model.save_pretrained('./model')
 
-
-
-model2.push_to_hub("WillRanger/Phi2-lora",
-                  use_auth_token=True,
-                  commit_message="basic training",
-                  private=False)
+#model2.push_to_hub("WillRanger/Phi2-lora",
+ #                 use_auth_token=True,
+  ##                commit_message="basic training",
+    #              private=False)
 
 print("new model saved")        
