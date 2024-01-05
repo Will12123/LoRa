@@ -27,7 +27,7 @@ def generate(instruction, model, tokenizer):
 
     inputs = tokenizer(instruction, return_tensors="pt", return_attention_mask=False)
     inputs = inputs.to('cuda')
-    outputs = model.generate(**inputs, max_length=512, do_sample=True)
+    outputs = model.generate(**inputs, max_length=512)
     text = tokenizer.batch_decode(outputs)[0]
     
     return text
