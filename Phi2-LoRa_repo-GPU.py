@@ -1,6 +1,12 @@
 import torch
 from peft import PeftModel, PeftConfig
 from transformers import AutoModelForCausalLM, AutoTokenizer
+import warnings
+import os
+
+# Suppress INFO and WARNING messages from TensorFlow
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+warnings.filterwarnings("ignore", category=UserWarning, module='transformers.generation.utils')
 
 def load_model_and_tokenizer():
     base_model = "microsoft/phi-2"
@@ -18,26 +24,20 @@ def load_model_and_tokenizer():
     return model, tokenizer
 
 def generate(instruction, model, tokenizer):                              
-    #input_ids = tokenizer.encode(instruction, return_tensors="pt")
-
-
-    #input_ids = input_ids.to('cuda')
-
-    #attention_mask = torch.ones_like(input_ids)
-
     inputs = tokenizer(instruction, return_tensors="pt", return_attention_mask=False)
     inputs = inputs.to('cuda')
     outputs = model.generate(
         **inputs, 
-        max_length=512, 
-        temperature=0.7,  # Lower temperature
-        top_k=50,         # Restrict to top 50 tokens
-        top_p=0.95,       # Nucleus sampling
-        repetition_penalty=1.2  # Apply repetition penalty
+        max_length=350,
+        do_sample=True, 
+        temperature=0.7,
+        top_k=50,  
+        top_p=0.9,
+        repetition_penalty=1,
     )
     text = tokenizer.batch_decode(outputs)[0]
-    
     return text
+
 
 if __name__ == '__main__':
     model, tokenizer = load_model_and_tokenizer()
